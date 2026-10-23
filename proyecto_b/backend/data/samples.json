@@ -1,0 +1,17 @@
+[
+ {"id": "eco", "expected_category": "economia", "expected_sentiment": "negativo",
+  "expected_entities": ["Banco Central de Valdivia", "Marta Olivares"],
+  "text": "El Banco Central de Valdivia anunció este martes un alza de 50 puntos base en su tasa de política monetaria, la tercera consecutiva, ante una inflación que se mantiene en 9,2%. La presidenta del organismo, Marta Olivares, reconoció que el crédito hipotecario se encarecerá y que el consumo podría contraerse durante el segundo semestre. Las pequeñas empresas advierten que el financiamiento se volverá inaccesible y que habrá recortes de personal."},
+ {"id": "dep", "expected_category": "deportes", "expected_sentiment": "positivo",
+  "expected_entities": ["Real Alameda", "Estadio Costanera"],
+  "text": "Con un golazo en el minuto 89, el Real Alameda venció 2-1 al Deportivo Sur en el Estadio Costanera y se clasificó a la final del torneo continental por primera vez en su historia. Más de 40 mil hinchas celebraron en las calles de la ciudad. El delantero Julián Peñafiel, autor del tanto decisivo, dedicó la victoria a su familia y a la afición."},
+ {"id": "tec", "expected_category": "tecnologia", "expected_sentiment": "neutral",
+  "expected_entities": ["Nubelia", "Lima"],
+  "text": "La empresa Nubelia presentó en Lima una plataforma de análisis de datos que usa modelos de lenguaje ejecutados en servidores locales. El producto estará disponible en tres planes y permitirá integrarse con sistemas de gestión de contenidos mediante webhooks. La compañía indicó que las primeras pruebas piloto comenzarán el próximo trimestre con medios de comunicación de la región."},
+ {"id": "sal", "expected_category": "salud", "expected_sentiment": "positivo",
+  "expected_entities": ["Hospital Regional del Sur", "Ministerio de Salud"],
+  "text": "El Hospital Regional del Sur redujo en un 40% el tiempo de espera para cirugías programadas tras implementar un nuevo sistema de agendamiento digital, informó el Ministerio de Salud. La directora del centro, Elena Quispe, destacó que más de 3.000 pacientes ya fueron intervenidos y que la meta es extender el modelo a otros cinco hospitales antes de fin de año."},
+ {"id": "pol", "expected_category": "politica", "expected_sentiment": "negativo",
+  "expected_entities": ["Congreso", "Ricardo Salvatierra"],
+  "text": "El Congreso rechazó anoche el proyecto de reforma tributaria impulsado por el gobierno, tras una votación de 68 contra 52 que dejó en evidencia las divisiones dentro de la coalición oficialista. El senador Ricardo Salvatierra calificó el resultado como un fracaso político y pidió al presidente renovar su gabinete. Organizaciones sociales convocaron a protestas para este fin de semana."}
+]

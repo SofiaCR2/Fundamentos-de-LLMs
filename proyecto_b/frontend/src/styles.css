@@ -1,0 +1,29 @@
+:root { --bg:#0b1622; --card:#12212f; --line:#1f3a4d; --fg:#e6edf3; --mut:#8aa0b2; --cy:#00c8ff; --gr:#00e082; --or:#f5a623; --rd:#ff5c7a; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; }
+.app { max-width:820px; margin:0 auto; padding:16px; }
+header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; }
+h1 { font-size:20px; margin:0; } h2 { font-size:16px; margin:0 0 8px; color:var(--cy); }
+nav { display:flex; gap:6px; flex-wrap:wrap; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; margin:12px 0; }
+input, textarea { width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:9px; margin:4px 0; font:inherit; }
+button { background:var(--line); color:var(--fg); border:0; border-radius:8px; padding:9px 14px; cursor:pointer; font:inherit; }
+button.on, .card > button, .login button { background:var(--cy); color:#001018; font-weight:600; }
+button:disabled { opacity:.5; }
+.login { max-width:340px; margin:20vh auto; }
+.row { display:flex; gap:8px; align-items:center; justify-content:space-between; }
+.muted { color:var(--mut); } .err { color:var(--rd); }
+.badge { font-size:12px; padding:2px 8px; border-radius:99px; border:1px solid var(--mut); }
+.badge.done { color:var(--gr); border-color:var(--gr); } .badge.failed { color:var(--rd); border-color:var(--rd); }
+.badge.processing { color:var(--or); border-color:var(--or); }
+.tag { display:inline-block; font-size:12px; margin:2px 4px 2px 0; padding:2px 8px; border-radius:6px; background:var(--line); }
+.tag.ent { background:#2a2150; }
+.chat { min-height:240px; max-height:50vh; overflow:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.bubble { padding:8px 12px; border-radius:12px; max-width:85%; white-space:pre-wrap; }
+.bubble.user { align-self:flex-end; background:var(--cy); color:#001018; }
+.bubble.bot { background:var(--line); } .bubble small { display:block; color:var(--mut); font-size:11px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+.kpi { text-align:center; margin:0; color:var(--mut); } .kpi b { display:block; font-size:22px; color:var(--fg); }
+.bar { display:grid; grid-template-columns:120px 1fr 50px; gap:8px; align-items:center; font-size:13px; margin:4px 0; }
+.bar div { background:var(--bg); border-radius:4px; height:10px; } .bar i { display:block; height:100%; background:var(--gr); border-radius:4px; }
+.bar em { font-style:normal; text-align:right; }
