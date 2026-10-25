@@ -1,52 +1,108 @@
-# Proyecto B - Pipeline de Analisis Inteligente (Modalidad 2.3: Ollama local)
+# Sesión 3 · LLM Security Lab
 
-Cliente: MediaGroup LATAM. Pipeline de 7 etapas (ingest, validar, limpiar, analizar, enriquecer, resumen SEO, exportar) con FastAPI y llama3.2:3b sobre Ollama.
+Proyecto práctico de seguridad y arquitectura para aplicaciones que integran modelos de lenguaje (LLM). Incluye una API con FastAPI, una interfaz React, pruebas automatizadas y laboratorios sobre autenticación, protección, disponibilidad, monitoreo, diseño arquitectónico y costos.
 
-## Estructura
+## Requisitos
+
+- Python 3.12
+- Node.js 22 o superior y npm
+- GNU Make
+- Docker y Docker Compose (opcional, para ejecutar los servicios en contenedores)
+
+## Estructura del proyecto
+
+```text
+.
+├── Makefile
+├── requirements.txt
+├── backend/
+│   ├── app/
+│   ├── data/
+|   |__ Scripts/
+│   ├── .env.example
+│   └── ...
+├── frontend/
+│   └── node_modules
+│   └── src
+│       └── app.jsx
+│       └── main.jsx
+│   └── ...
+└── docs/
+|   └── analisi_costos.xlsx
+│   └── diagrama C4.pdf
+│   └── Documento_de_diseño_RFC.pdf
+│   └── Reflexion_critica
+└── Makefile
+└── Readme.md
+└── ...
 ```
-proyecto_b/
-  Makefile            comandos desde la raiz (make help)
-  backend/            API FastAPI, pipeline, scripts, datos de muestra
-    app/  scripts/  data/  results/  requirements.txt  .env.example  Makefile
-  frontend/           React + Vite (login, articulos, chat, dashboard)
-  docs/               E1 diagrama C4, E2 RFC, E6 costos, ficha del modelo, indice de entregables
-```
 
-## Inicio rapido (desde la raiz)
+## Instalación inicial
+
+Desde la raíz del repositorio, ejecuta:
+
 ```bash
-make help        # lista todos los comandos
-make install     # Ollama + llama3.2:3b + backend (Ubuntu 24.04)
-make run         # API en http://127.0.0.1:8000  (primera vez: crea backend/.env; editalo)
-make smoke       # en otra terminal: prueba extremo a extremo
-make frontend-install && make frontend-dev   # interfaz en http://localhost:5173
-make zip         # empaqueta en dist/proyecto_b.zip
+make setup
 ```
-Indice de entregables y estado: `docs/ENTREGABLES.md`.
 
-## Arranque manual del backend
+Este comando crea el entorno virtual `.venv` con Python 3.12, , instala las dependencias indicadas en `requirements.txt`, crea `backend/.env` a partir de `backend/.env.example` si todavía no existe e instala las dependencias del frontend con `npm install`.
+
+Si el comando falla porque no se encuentra Python 3.12 o Node.js 22+, instala las versiones requeridas y vuelve a ejecutarlo. Revisa `backend/.env` y ajusta la configuración local antes de iniciar los servicios.
+
+## Ejecución en desarrollo
+
+Abre terminales separadas desde la raíz del proyecto.
+
+**Terminal 1 — backend:**
+
 ```bash
-cd backend
-bash scripts/install_ollama.sh
-set -a; source .env; set +a
-.venv/bin/uvicorn app.main:app --port 8000
+make backend
 ```
 
-## Prueba con curl
+La API FastAPI estará disponible en `http://localhost:8000` y la documentación interactiva en `http://localhost:8000/docs`.
+
+**Terminal 2 — frontend:**
+
 ```bash
-TOKEN=$(curl -s localhost:8000/auth/token -H 'content-type: application/json' \
-  -d '{"username":"admin","password":"TU_CLAVE"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
-
-curl -s localhost:8000/webhook/articles -H "Authorization: Bearer $TOKEN" -H 'content-type: application/json' \
-  -d '{"title":"Banco central sube tasas","body":"El Banco Central anuncio este martes un alza de 25 puntos base en la tasa de politica monetaria, citando presiones inflacionarias persistentes y la volatilidad del dolar."}'
-
-curl -s localhost:8000/articles/<id> -H "Authorization: Bearer $TOKEN"
+make frontend
 ```
 
-## Endpoints
-POST /auth/token | POST /webhook/articles (202) | GET /articles | GET /articles/{id} | POST /chat | GET /dashboard | GET /health
+La interfaz React con Vite estará disponible en `http://localhost:5173`.
 
-## Criterios de la modalidad 2.3
-- `docs/MODELO_OLLAMA.md`: ficha GGUF, RAM requerida, plantilla de benchmarks y limitaciones vs Vertex AI.
-- `make benchmark`: latencia, tokens/s y memoria con los prompts reales (`backend/app/prompts.py`).
-- `make compare CLOUD=vertex`: mismo prompt en Ollama vs API cloud.
-- `backend/data/samples.json`: 5 articulos de muestra con etiquetas esperadas (entidades ficticias).
+Para consultar todos los comandos disponibles:
+
+```bash
+make help
+```
+
+## Limpieza
+
+Para eliminar cachés de Python, archivos `.pyc`, registros JSONL de `backend/logs/` y la base de datos `backend/llm_security_lab.db`, ejecuta:
+
+```bash
+make clean
+```
+
+**Importante:** este comando elimina esos registros y esa base de datos locales. Guarda cualquier dato que quieras conservar antes de ejecutarlo.
+
+## Referencia rápida de comandos
+
+| Comando | Descripción |
+|---|---|
+| `make help` | Muestra la ayuda de los comandos |
+| `make setup` | Configura los entornos de backend y frontend |
+| `make backend` | Inicia FastAPI en el puerto 8000 |
+| `make frontend` | Inicia React/Vite en el puerto 5173 |
+| `make simulado` | Ejecuta el simulador de Ollama en el puerto 11434 |
+| `make test` | Ejecuta las pruebas automatizadas y muestra cobertura |
+| `make labs` | Ejecuta los laboratorios 09 a 14 |
+| `make lab09`–`make lab14` | Ejecuta un laboratorio específico |
+| `make docker` | Construye e inicia los servicios con Docker Compose |
+| `make docker-down` | Detiene los servicios de Docker Compose |
+| `make clean` | Elimina archivos temporales, logs indicados y la base de datos local |
+
+## Notas técnicas
+
+- Las recetas de GNU Make se ejecutan en subshells independientes por línea. Por eso, activar el entorno con `source .venv/bin/activate` en una línea no lo mantiene activo en la siguiente. El `Makefile` evita este problema invocando los ejecutables mediante rutas explícitas, como `.venv/bin/python` y `.venv/bin/pytest`.
+- Los objetivos `backend`, `frontend` y `test` requieren que primero se complete `make setup`.
+- El objetivo `simulado` usa el script `scripts/ollama_simulado.py`; el `Makefile` no define un objetivo para instalar un modelo real de Ollama.
