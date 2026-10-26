@@ -93,16 +93,8 @@ make clean
 | `make setup` | Configura los entornos de backend y frontend |
 | `make backend` | Inicia FastAPI en el puerto 8000 |
 | `make frontend` | Inicia React/Vite en el puerto 5173 |
-| `make simulado` | Ejecuta el simulador de Ollama en el puerto 11434 |
-| `make test` | Ejecuta las pruebas automatizadas y muestra cobertura |
-| `make labs` | Ejecuta los laboratorios 09 a 14 |
-| `make lab09`–`make lab14` | Ejecuta un laboratorio específico |
-| `make docker` | Construye e inicia los servicios con Docker Compose |
-| `make docker-down` | Detiene los servicios de Docker Compose |
-| `make clean` | Elimina archivos temporales, logs indicados y la base de datos local |
 
 ## Notas técnicas
 
 - Las recetas de GNU Make se ejecutan en subshells independientes por línea. Por eso, activar el entorno con `source .venv/bin/activate` en una línea no lo mantiene activo en la siguiente. El `Makefile` evita este problema invocando los ejecutables mediante rutas explícitas, como `.venv/bin/python` y `.venv/bin/pytest`.
 - Los objetivos `backend`, `frontend` y `test` requieren que primero se complete `make setup`.
-- El objetivo `simulado` usa el script `scripts/ollama_simulado.py`; el `Makefile` no define un objetivo para instalar un modelo real de Ollama.
