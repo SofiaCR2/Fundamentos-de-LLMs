@@ -5,11 +5,7 @@
 #   make setup      → configurar entorno por primera vez
 #   make backend    → levantar FastAPI en http://localhost:8000/docs
 #   make frontend   → levantar React en http://localhost:5173
-#   make test       → correr pruebas (sin Ollama)
-#   make labs       → ejecutar todos los labs en secuencia
-#   make simulado   → Ollama simulado (sin GPU)
-#   make docker     → levantar todo con Docker
-#   make clean      → limpiar archivos temporales
+
 # ============================================================
 #
 # NOTA TÉCNICA: cada línea de receta Make corre en un subshell independiente,
