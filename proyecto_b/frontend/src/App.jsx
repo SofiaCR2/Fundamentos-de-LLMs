@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { api } from "./api.js";
 
 function Login({ onToken }) {
-  const [u, setU] = useState("admin");
-  const [p, setP] = useState("");
+  const [u, setU] = useState("usuario");
+  const [p, setP] = useState("usuario");
   const [err, setErr] = useState("");
   const submit = async () => {
     try {
@@ -147,7 +147,7 @@ export default function App() {
           {[["articles", "Artículos"], ["chat", "Chat"], ["dash", "Dashboard"]].map(([k, l]) => (
             <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{l}</button>
           ))}
-          <button onClick={logout}>Salir</button>
+          <button onClick={logout}>🔒</button>
         </nav>
       </header>
       {tab === "articles" && <Articles call={call} />}

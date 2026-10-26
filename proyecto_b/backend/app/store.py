@@ -48,7 +48,7 @@ def stats():
     return {
         "articles": n, "by_status": by,
         "total_tokens": sum(s["tokens"] for s in spans),
-        "total_cost_usd": round(sum(s["cost_usd"] for s in spans), 6),
+        "total_cost_usd": 0,
         "avg_latency_ms_per_stage": {
             st: round(sum(s["latency_ms"] for s in spans if s["stage"] == st) /
                       max(1, sum(1 for s in spans if s["stage"] == st)))

@@ -7,8 +7,8 @@ from fastapi import HTTPException, Header
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 JWT_SECRET = os.getenv("JWT_SECRET", "dev-secret-change-me")
-APP_USER = os.getenv("APP_USER", "admin")
-APP_PASSWORD = os.getenv("APP_PASSWORD", "admin")
+APP_USER = os.getenv("APP_USER", "usuario")
+APP_PASSWORD = os.getenv("APP_PASSWORD", "usuario")
 RATE_LIMIT = int(os.getenv("RATE_LIMIT_PER_MIN", "30"))
 COST_PER_1K = float(os.getenv("COST_PER_1K_TOKENS", "0.00005"))
 

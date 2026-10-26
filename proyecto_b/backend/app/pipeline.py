@@ -8,7 +8,7 @@ from .prompts import CATEGORIES, SEO_HINTS, messages  # prompts compartidos con 
 
 def validate(p: dict):                       # 02 Validar (schema ya validado por pydantic)
     if len(p["body"].strip()) < 50:
-        raise ValueError("El cuerpo del articulo es demasiado corto (<50 chars)")
+        raise ValueError("El cuerpo del articulo es demasiado corto escribe lago mas largo que 50 caracteres")
 
 def clean(text: str) -> str:                 # 03 Limpiar -> texto plano
     text = re.sub(r"<(script|style).*?</\1>", " ", text, flags=re.S | re.I)
@@ -40,7 +40,7 @@ async def seo_summary(text: str):            # 06 Resumen SEO < 160 chars
     return cut + "...", tokens
 
 async def export(aid: str, result: dict, callback_url: str | None):   # 07 DB + Webhook
-    store.update(aid, status="done", result=result)
+    store.update(aid, status="Exitoso", result=result)
     if callback_url:
         try:
             async with httpx.AsyncClient(timeout=10) as c:
@@ -52,7 +52,7 @@ async def export(aid: str, result: dict, callback_url: str | None):   # 07 DB + 
 
 async def run(aid: str, payload: dict):
     spans: list = []
-    store.update(aid, status="processing")
+    store.update(aid, status="Procesando")
     result: dict = {"title": payload["title"], "url": payload.get("url")}
     try:
         with span(aid, "02_validate", spans): validate(payload)
@@ -68,5 +68,5 @@ async def run(aid: str, payload: dict):
         store.update(aid, metrics=spans)
         event("pipeline_done", id=aid, total_ms=sum(x["latency_ms"] for x in spans))
     except (HTTPException, Exception) as e:
-        store.update(aid, status="failed", error=str(getattr(e, "detail", e)), metrics=spans)
+        store.update(aid, status="Fallido", error=str(getattr(e, "detail", e)), metrics=spans)
         event("pipeline_failed", id=aid, error=str(getattr(e, "detail", e)))
